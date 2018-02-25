@@ -52,22 +52,13 @@ open class MainActivity {
             groupListComboBox.addActionListener(
                     {
                         e: ActionEvent ->
-                        val combo = e.source
-                        println(combo)
-//                        val currentSelection = combo.getSelectedItem()
+                        val selectedItem = groupListComboBox.selectedItem
+                        val selectedIndex = groupListComboBox.selectedIndex
+                        println(selectedItem)
+                        println(selectedIndex)
                     }
             )
-//            println()
 
-
-//            fun actionPerformed(actionEvent: ActionEvent) {
-//            groupListComboBox.addActionListener()
-
-
-//                groupListComboBox.addActionListener(groupListComboBox)
-//                val itemIndex = groupListComboBox.selectedIndex
-//                println(itemIndex)
-//            }
 
 //            fun appendDropDownListItemToNoteField() {
 //                if (groupListComboBox.selectedItem != null) {
