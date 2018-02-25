@@ -11,7 +11,7 @@ open class DropDownList {
 //    val groupListComboBox: JComboBox<String> = JComboBox()
 
 
-    val dropDownMap = mapOf(null to null,
+    val dropDownMap = mapOf("" to "",
             "Anger Management" to "Participants discussed the emotion of anger and how it affects the body and mind." +
                     "We discussed emotional and physical responses of anger, and referenced primary and secondary " +
                     "emotions concerning anger. Participants identified their current responses to anger, there support" +

@@ -1,5 +1,9 @@
 import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import javax.swing.*
+import javax.swing.JComboBox
+
 
 open class MainActivity {
 
@@ -42,8 +46,36 @@ open class MainActivity {
                     groupListComboBox.addItem(i)
                 }
             }
+
             dropDownListItemsComboBox()
 
+            groupListComboBox.addActionListener(
+                    {
+                        e: ActionEvent ->
+                        val combo = e.source
+                        println(combo)
+//                        val currentSelection = combo.getSelectedItem()
+                    }
+            )
+//            println()
+
+
+//            fun actionPerformed(actionEvent: ActionEvent) {
+//            groupListComboBox.addActionListener()
+
+
+//                groupListComboBox.addActionListener(groupListComboBox)
+//                val itemIndex = groupListComboBox.selectedIndex
+//                println(itemIndex)
+//            }
+
+//            fun appendDropDownListItemToNoteField() {
+//                if (groupListComboBox.selectedItem != null) {
+//                    val itemIndex = groupListComboBox.selectedIndex
+//                    println(itemIndex)
+//                }
+//            }
+//            appendDropDownListItemToNoteField()
 
 
             /*
