@@ -1,6 +1,5 @@
 import java.awt.*
 import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 import javax.swing.*
 import javax.swing.JComboBox
 
@@ -49,25 +48,23 @@ open class MainActivity {
 
             dropDownListItemsComboBox()
 
+            var selectedItemCache : Any = JComboBox<String>()
+            val selectedItemList : MutableList<String> = mutableListOf()
+
             groupListComboBox.addActionListener(
                     {
-                        e: ActionEvent ->
+                        _ : ActionEvent ->
                         val selectedItem = groupListComboBox.selectedItem
                         val selectedIndex = groupListComboBox.selectedIndex
                         println(selectedItem)
                         println(selectedIndex)
+                        if (selectedIndex > 0 && selectedItem != selectedItemCache && selectedItem.toString() !in selectedItemList) {
+                            output.append(selectedItem.toString() + "\n")
+                            selectedItemList.add(selectedItem.toString())
+                            selectedItemCache = selectedItem
+                        }
                     }
             )
-
-
-//            fun appendDropDownListItemToNoteField() {
-//                if (groupListComboBox.selectedItem != null) {
-//                    val itemIndex = groupListComboBox.selectedIndex
-//                    println(itemIndex)
-//                }
-//            }
-//            appendDropDownListItemToNoteField()
-
 
             /*
 --------------------- NORTH PANEL ------------------------
