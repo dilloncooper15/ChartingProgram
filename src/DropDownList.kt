@@ -1,17 +1,8 @@
-import java.awt.FlowLayout
-import java.awt.RenderingHints
-import java.util.stream.IntStream.range
-import javax.swing.JComboBox
-import javax.swing.JPanel
-import kotlin.coroutines.experimental.ContinuationInterceptor
 
 open class DropDownList {
-    //COMBO BOX
-    //Create a drop down combo box for the groups.
-//    val groupListComboBox: JComboBox<String> = JComboBox()
 
-
-    val dropDownMap = mapOf("" to "",
+    val dropDownMap = mapOf(
+            "" to "",
             "Anger Management" to "Participants discussed the emotion of anger and how it affects the body and mind." +
                     "We discussed emotional and physical responses of anger, and referenced primary and secondary " +
                     "emotions concerning anger. Participants identified their current responses to anger, there support" +
@@ -67,27 +58,6 @@ open class DropDownList {
             "Self-Esteem" to "",
             "Time Management" to "",
             "Values" to "",
-            "Wellness" to "")
-//
-//    fun dropDownListItemsComboBox() {
-//        val groupListComboBox: JComboBox<String> = JComboBox()
-//        for (i in dropDownMap.keys) { //range(0, dropDownMap.size)) {
-//            println(groupListComboBox.addItem(i))
-//        }
-//        println(dropDownListItemsComboBox())
-//    }
-
-
-
-//    fun createDropDownList() {
-//
-//        //Create the northern panel and specify it be a flow layout.
-//        val northPanel = JPanel(FlowLayout(FlowLayout.LEFT))
-//
-//        //Add the panel to the frame and specify it cover the north area of the frame layout.
-//        MainActivity.frame.add(northPanel, "North")
-//
-//        //Add the groupListHashMap to the north panel.
-//        northPanel.add(groupListComboBox)
-
+            "Wellness" to ""
+    )
 }

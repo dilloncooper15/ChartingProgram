@@ -70,7 +70,6 @@ open class MainActivity {
 --------------------- NORTH PANEL ------------------------
 */
 
-
             //NORTH PANEL RADIO BUTTONS
             //Create 6x radio buttons for different group durations.
             val didNotAttend = JRadioButton("Did Not Attend", true)
@@ -231,6 +230,3 @@ open class MainActivity {
 
     }
 }
-
-
-
