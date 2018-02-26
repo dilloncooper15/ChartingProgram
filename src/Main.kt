@@ -58,7 +58,9 @@ open class MainActivity {
                         val selectedIndex = groupListComboBox.selectedIndex
                         println(selectedItem)
                         println(selectedIndex)
-                        if (selectedIndex > 0 && selectedItem != selectedItemCache && selectedItem.toString() !in selectedItemList) {
+                        if (selectedIndex > 0
+                                && selectedItem != selectedItemCache
+                                && selectedItem.toString() !in selectedItemList) {
                             output.append(selectedItem.toString() + "\n")
                             selectedItemList.add(selectedItem.toString())
                             selectedItemCache = selectedItem
@@ -66,31 +68,23 @@ open class MainActivity {
                     }
             )
 
-            /*
---------------------- NORTH PANEL ------------------------
-*/
-
             //NORTH PANEL RADIO BUTTONS
-            //Create 6x radio buttons for different group durations.
-            val didNotAttend = JRadioButton("Did Not Attend", true)
+            val didNotAttend = JRadioButton("Did Not Attend")
             val fifteenMinRadioButton = JRadioButton("15 Minutes")
             val thirtyMinRadioButton = JRadioButton("30 Minutes")
             val fortyFiveMinRadioButton = JRadioButton("45 Minutes")
             val sixtyMinRadioButton = JRadioButton("60 Minutes")
             val entireGroupRadioButton = JRadioButton("Entire Group Duration")
 
-            //Create an array of jradio buttons for loops.
-            val JRadioButtonList = arrayOf<JRadioButton>(didNotAttend, fifteenMinRadioButton, thirtyMinRadioButton, fortyFiveMinRadioButton, sixtyMinRadioButton, entireGroupRadioButton)
+            val jRadioButtonList = arrayOf(didNotAttend, fifteenMinRadioButton, thirtyMinRadioButton, fortyFiveMinRadioButton, sixtyMinRadioButton, entireGroupRadioButton)
 
-            //Create an empty button group.
             val radioButtonGroup = ButtonGroup()
 
-            // For each radio button in the list, add it to the north panel (flow layout)
-            // Once they are all added, then add all radio buttons to the group.
-            for (x in JRadioButtonList) {
+            for (x in jRadioButtonList) {
                 northPanel.add(x)
-                run { radioButtonGroup.add(x) }
+                run { radioButtonGroup.add(x)}
             }
+
             northPanel.isVisible = true
             northPanel.border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 1), BorderFactory.createLineBorder(Color.CYAN, 4))
             groupListComboBox.border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 1), BorderFactory.createLineBorder(Color.CYAN, 1))
