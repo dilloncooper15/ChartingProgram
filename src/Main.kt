@@ -1,7 +1,11 @@
 import java.awt.*
+import java.awt.Color.BLACK
+import java.awt.Color.CYAN
 import java.awt.event.ActionEvent
+import java.util.concurrent.Flow
 import javax.swing.*
 import javax.swing.JComboBox
+import javax.swing.border.CompoundBorder
 
 
 open class MainActivity {
@@ -12,6 +16,8 @@ open class MainActivity {
         fun main(args: Array<String>) {
             val frame = JFrame("Charting Program")
             val groupListComboBox: JComboBox<String> = JComboBox()
+            var selectedItemCache: Any = JComboBox<String>()
+            val selectedItemList: MutableList<String> = mutableListOf()
 //            val groupListComboBox = DropDownList().dropDownListItemsComboBox()
 
             frame.isResizable = true
@@ -20,25 +26,32 @@ open class MainActivity {
             val attendanceLabel = JLabel("Attendance:")
             attendanceLabel.isVisible = true
 
-            val northPanel = JPanel(FlowLayout(FlowLayout.LEFT))
-            frame.add(northPanel, "North")
-
-            northPanel.add(groupListComboBox)
-            northPanel.add(attendanceLabel)
-
-            val output = TextArea()
-            frame.add(output, "South")
-
-            val eastPanel = JPanel()
-            eastPanel.layout = BoxLayout(eastPanel, BoxLayout.Y_AXIS)
 
             val centerPanel = JPanel(GridLayout(9, 10))
             frame.add(centerPanel)
             centerPanel.isVisible = true
 
-            frame.setSize(950, 600)
+            val output = TextArea()
+            frame.add(output, "South")
+
+            frame.setSize(1000, 600)
             frame.isVisible = true
 
+            fun addCompoundBorder(insideColor: Color, insideThickness: Int, insideCorners: Boolean, outsideColor: Color, outsideThickness: Int, outsideCorners: Boolean): CompoundBorder {
+                return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(insideColor, insideThickness, insideCorners), BorderFactory.createLineBorder(outsideColor, outsideThickness, outsideCorners))
+            }
+
+
+            val didNotAttend = JRadioButton("Did Not Attend")
+            val fifteenMinRadioButton = JRadioButton("15 Minutes")
+            val thirtyMinRadioButton = JRadioButton("30 Minutes")
+            val fortyFiveMinRadioButton = JRadioButton("45 Minutes")
+            val sixtyMinRadioButton = JRadioButton("60 Minutes")
+            val entireGroupRadioButton = JRadioButton("Entire Group Duration")
+
+            val jRadioButtonList = arrayOf(didNotAttend, fifteenMinRadioButton, thirtyMinRadioButton, fortyFiveMinRadioButton, sixtyMinRadioButton, entireGroupRadioButton)
+
+            val radioButtonGroup = ButtonGroup()
 
             fun dropDownListItemsComboBox() {
                 for (i in DropDownList().dropDownMap.keys) {
@@ -46,14 +59,8 @@ open class MainActivity {
                 }
             }
 
-            dropDownListItemsComboBox()
-
-            var selectedItemCache : Any = JComboBox<String>()
-            val selectedItemList : MutableList<String> = mutableListOf()
-
             groupListComboBox.addActionListener(
-                    {
-                        _ : ActionEvent ->
+                    { _: ActionEvent ->
                         val selectedItem = groupListComboBox.selectedItem
                         val selectedIndex = groupListComboBox.selectedIndex
                         println(selectedItem)
@@ -68,44 +75,44 @@ open class MainActivity {
                     }
             )
 
-            //NORTH PANEL RADIO BUTTONS
-            val didNotAttend = JRadioButton("Did Not Attend")
-            val fifteenMinRadioButton = JRadioButton("15 Minutes")
-            val thirtyMinRadioButton = JRadioButton("30 Minutes")
-            val fortyFiveMinRadioButton = JRadioButton("45 Minutes")
-            val sixtyMinRadioButton = JRadioButton("60 Minutes")
-            val entireGroupRadioButton = JRadioButton("Entire Group Duration")
+            fun addNorthPanelToFrame(constraintLayoutName: String, flowLayout: FlowLayout, visible: Boolean) {  //constraintDirection : LayoutManager
+                val panelAdd = JPanel(flowLayout)
+                frame.add(panelAdd, constraintLayoutName)
+                panelAdd.isVisible = visible
 
-            val jRadioButtonList = arrayOf(didNotAttend, fifteenMinRadioButton, thirtyMinRadioButton, fortyFiveMinRadioButton, sixtyMinRadioButton, entireGroupRadioButton)
-
-            val radioButtonGroup = ButtonGroup()
-
-            for (x in jRadioButtonList) {
-                northPanel.add(x)
-                run { radioButtonGroup.add(x)}
+                panelAdd.add(groupListComboBox)
+                panelAdd.border = addCompoundBorder(BLACK, 1, true, CYAN, 4, true)
+                groupListComboBox.border = addCompoundBorder(BLACK, 1, true, CYAN, 4, true)
+                panelAdd.add(attendanceLabel)
+                dropDownListItemsComboBox()
+                for (x in jRadioButtonList) {
+                    panelAdd.add(x)
+                    run { radioButtonGroup.add(x) }
+                }
             }
 
-            northPanel.isVisible = true
-            northPanel.border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 1), BorderFactory.createLineBorder(Color.CYAN, 4))
-            groupListComboBox.border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 1), BorderFactory.createLineBorder(Color.CYAN, 1))
 
-            /*
------------------- EAST PANEL -----------------
-*/
+            fun eastPanelAddButton(buttonName: String, visible: Boolean, panelName: JPanel) {
+                val jButtonName = JButton(buttonName)
+                jButtonName.isVisible = visible
+                panelName.add(jButtonName)
+            }
 
-            val resetButton = JButton("Reset  ")
-            resetButton.isVisible = true
-            eastPanel.add(resetButton)
+            fun addEastPanelToFrame(constraintLayoutName: String, visible: Boolean) {
+                val panelAdd = JPanel(FlowLayout(FlowLayout.LEFT))
+                panelAdd.layout = BoxLayout(panelAdd, BoxLayout.Y_AXIS)
+                frame.add(panelAdd, constraintLayoutName)
+                panelAdd.isVisible = visible
+                eastPanelAddButton("Reset", true, panelAdd)
+                eastPanelAddButton("Enter", true, panelAdd)
+            }
 
-            val submitButton = JButton("Submit")
-            submitButton.isVisible = true
-            eastPanel.add(submitButton)
 
-            //Add the button to the panel.
-            frame.add(eastPanel, "East")
-            eastPanel.isVisible = true
+            addNorthPanelToFrame("North", FlowLayout(FlowLayout.LEFT), true)
+            addEastPanelToFrame("East", true)
 
-            /*
+
+/*
 ----------------- CENTER PANEL ------------
 */
             //Create a new jpanel with flow layout to hold the affect tick boxes.
