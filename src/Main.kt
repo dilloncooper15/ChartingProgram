@@ -1,11 +1,13 @@
 import java.awt.*
-import java.awt.Color.BLACK
-import java.awt.Color.CYAN
+import java.awt.Color.*
 import java.awt.event.ActionEvent
-import java.util.concurrent.Flow
+import java.awt.event.ActionListener
 import javax.swing.*
 import javax.swing.JComboBox
 import javax.swing.border.CompoundBorder
+import javax.swing.AbstractButton
+
+//NOTE: Checkboxes are usualy item listener
 
 
 open class MainActivity {
@@ -23,16 +25,9 @@ open class MainActivity {
             frame.isResizable = true
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
-            val attendanceLabel = JLabel("Attendance:")
-            attendanceLabel.isVisible = true
-
-
             val centerPanel = JPanel(GridLayout(9, 10))
             frame.add(centerPanel)
             centerPanel.isVisible = true
-
-            val output = TextArea()
-            frame.add(output, "South")
 
             frame.setSize(1000, 600)
             frame.isVisible = true
@@ -41,15 +36,9 @@ open class MainActivity {
                 return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(insideColor, insideThickness, insideCorners), BorderFactory.createLineBorder(outsideColor, outsideThickness, outsideCorners))
             }
 
-
-            val didNotAttend = JRadioButton("Did Not Attend")
-            val fifteenMinRadioButton = JRadioButton("15 Minutes")
-            val thirtyMinRadioButton = JRadioButton("30 Minutes")
-            val fortyFiveMinRadioButton = JRadioButton("45 Minutes")
-            val sixtyMinRadioButton = JRadioButton("60 Minutes")
-            val entireGroupRadioButton = JRadioButton("Entire Group Duration")
-
-            val jRadioButtonList = arrayOf(didNotAttend, fifteenMinRadioButton, thirtyMinRadioButton, fortyFiveMinRadioButton, sixtyMinRadioButton, entireGroupRadioButton)
+            // Add to South Panel
+            val output = TextArea()
+            frame.add(output, "South")
 
             val radioButtonGroup = ButtonGroup()
 
@@ -83,14 +72,52 @@ open class MainActivity {
                 panelAdd.add(groupListComboBox)
                 panelAdd.border = addCompoundBorder(BLACK, 1, true, CYAN, 4, true)
                 groupListComboBox.border = addCompoundBorder(BLACK, 1, true, CYAN, 4, true)
-                panelAdd.add(attendanceLabel)
+                panelAdd.add(JLabel("Attendance:")).isVisible
                 dropDownListItemsComboBox()
-                for (x in jRadioButtonList) {
-                    panelAdd.add(x)
-                    run { radioButtonGroup.add(x) }
-                }
-            }
 
+
+                val sliceActionListener = ActionListener { actionEvent ->
+                    val aButton = actionEvent.source as AbstractButton
+                }
+
+                val didNotAttend = JRadioButton("Did Not Attend")
+                val fifteenMinRadioButton = JRadioButton("15 Minutes")
+                val thirtyMinRadioButton = JRadioButton("30 Minutes")
+                val fortyFiveMinRadioButton = JRadioButton("45 Minutes")
+                val sixtyMinRadioButton = JRadioButton("60 Minutes")
+                val entireGroupRadioButton = JRadioButton("Entire Group Duration")
+
+                panelAdd.add(didNotAttend)
+                panelAdd.add(fifteenMinRadioButton)
+                panelAdd.add(thirtyMinRadioButton)
+                panelAdd.add(fortyFiveMinRadioButton)
+                panelAdd.add(sixtyMinRadioButton)
+                panelAdd.add(entireGroupRadioButton)
+
+                radioButtonGroup.add(didNotAttend)
+                radioButtonGroup.add(fifteenMinRadioButton)
+                radioButtonGroup.add(thirtyMinRadioButton)
+                radioButtonGroup.add(fortyFiveMinRadioButton)
+                radioButtonGroup.add(sixtyMinRadioButton)
+                radioButtonGroup.add(entireGroupRadioButton)
+
+                didNotAttend.addActionListener(sliceActionListener)
+                fifteenMinRadioButton.addActionListener(sliceActionListener)
+                thirtyMinRadioButton.addActionListener(sliceActionListener)
+                fortyFiveMinRadioButton.addActionListener(sliceActionListener)
+                sixtyMinRadioButton.addActionListener(sliceActionListener)
+                entireGroupRadioButton.addActionListener(sliceActionListener)
+
+
+
+//                val jRadioButtonList = arrayListOf(didNotAttend, fifteenMinRadioButton, thirtyMinRadioButton,
+//                        fortyFiveMinRadioButton, sixtyMinRadioButton, entireGroupRadioButton)
+
+//                for (x in jRadioButtonList) {
+//                    panelAdd.add(x)
+//                    run { radioButtonGroup.add(x) }
+//                }
+            }
 
             fun eastPanelAddButton(buttonName: String, visible: Boolean, panelName: JPanel) {
                 val jButtonName = JButton(buttonName)
@@ -103,9 +130,12 @@ open class MainActivity {
                 panelAdd.layout = BoxLayout(panelAdd, BoxLayout.Y_AXIS)
                 frame.add(panelAdd, constraintLayoutName)
                 panelAdd.isVisible = visible
-                eastPanelAddButton("Reset", true, panelAdd)
-                eastPanelAddButton("Enter", true, panelAdd)
+                val reset = eastPanelAddButton("Reset", true, panelAdd)
+                val enter = eastPanelAddButton("Enter", true, panelAdd)
             }
+            //todo: Add reset functionality
+
+//            if (addEastPanelAddButton.reset)
 
 
             addNorthPanelToFrame("North", FlowLayout(FlowLayout.LEFT), true)
